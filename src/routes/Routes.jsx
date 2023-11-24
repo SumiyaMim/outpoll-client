@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Privacy from "../pages/Privacy";
+import Help from "../pages/Help";
 
 const router = createBrowserRouter([
     {
@@ -28,7 +29,10 @@ const router = createBrowserRouter([
                 path: '/privacy',
                 element: <Privacy></Privacy>
             },   
-
+            {
+                path: '/Help',
+                element: <Help></Help>
+            },   
         ]
     }
 ])
