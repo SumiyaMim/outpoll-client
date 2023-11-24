@@ -28,6 +28,14 @@ const Navbar = () => {
                                     Home
                             </NavLink>
                             <NavLink
+                                to='/about'
+                                className={({ isActive }) =>
+                                isActive ? 'font-medium text-sm py-1 px-1.5 border-b-2 border-purple-700' : 'font-medium text-sm py-1 px-1.5'
+                                }
+                                >
+                                    About
+                            </NavLink>
+                            <NavLink
                                 to='/surveys'
                                 className={({ isActive }) =>
                                 isActive ? 'font-medium text-sm py-1 px-1.5 border-b-2 border-purple-700' : 'font-medium text-sm py-1 px-1.5'
@@ -42,6 +50,14 @@ const Navbar = () => {
                                 }
                                 >
                                     Pricing
+                            </NavLink>
+                            <NavLink
+                                to='/contact'
+                                className={({ isActive }) =>
+                                isActive ? 'font-medium text-sm py-1 px-1.5 border-b-2 border-purple-700' : 'font-medium text-sm py-1 px-1.5'
+                                }
+                                >
+                                    Contact
                             </NavLink>
                         </div>
                     </div>
@@ -65,15 +81,23 @@ const Navbar = () => {
                         <NavLink
                                 to='/'
                                 className={({ isActive }) =>
-                                isActive ? 'font-medium text-sm text-purple-700' : 'font-medium text-sm'
+                                isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
                                 }
                                 >
                                     Home
                         </NavLink>
                         <NavLink
+                                to='/about'
+                                className={({ isActive }) =>
+                                isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
+                                }
+                                >
+                                    About
+                        </NavLink>
+                        <NavLink
                                 to='/surveys'
                                 className={({ isActive }) =>
-                                isActive ? 'font-medium text-sm text-purple-700' : 'font-medium text-sm'
+                                isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
                                 }
                                 >
                                     Surveys
@@ -81,15 +105,23 @@ const Navbar = () => {
                         <NavLink
                                 to='/pricing'
                                 className={({ isActive }) =>
-                                isActive ? 'font-medium text-sm text-purple-700' : 'font-medium text-sm'
+                                isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
                                 }
                                 >
                                     Pricing
                         </NavLink>
                         <NavLink
+                                to='/contact'
+                                className={({ isActive }) =>
+                                isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
+                                }
+                                >
+                                    Contact
+                        </NavLink>
+                        <NavLink
                                 to='/signin'
                                 className={({ isActive }) =>
-                                isActive ? 'font-medium text-sm text-purple-700' : 'font-medium text-sm'
+                                isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
                                 }
                                 >
                                     Sign in

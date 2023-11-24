@@ -1,6 +1,6 @@
 import error from '../assets/error.json'
 import Lottie from "lottie-react"
-import { TbArrowBackUp } from 'react-icons/tb'
+import { BiArrowBack } from "react-icons/bi";
 import { Link } from 'react-router-dom'
 
 const Error = () => {
@@ -12,8 +12,8 @@ const Error = () => {
         <div className='mb-5'>
             <Link to='/'>
                 <button className='flex items-center gap-2 bg-purple-800 px-4 py-2 rounded-lg text-white'>
-                    <i><TbArrowBackUp className='text-2xl'></TbArrowBackUp></i>
-                    <p className='text-base font-medium'>Back to home</p>
+                    <i><BiArrowBack className='text-xl'></BiArrowBack></i>
+                    <p className='text-sm font-medium'>Back to home</p>
                 </button>
             </Link>
         </div>
