@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useState } from 'react'
 import { AiOutlineMenu } from 'react-icons/ai'
 import Container from './Container'
@@ -16,16 +16,34 @@ const Navbar = () => {
 
             {/* Dropdown Menu */}
             <div className='relative'>
-                <div className='flex flex-row items-center gap-5'>
+                <div className='flex flex-row items-center gap-6'>
                     <div className='hidden lg:block'>
-                        <NavLink
-                            to='/'
-                            className={({ isActive }) =>
-                            isActive ? 'font-medium text-sm py-1 px-1.5 border-b-2 border-purple-700' : 'font-medium text-sm'
-                            }
-                            >
-                                Home
-                        </NavLink>
+                        <div className='flex items-center gap-6'>
+                            <NavLink
+                                to='/'
+                                className={({ isActive }) =>
+                                isActive ? 'font-medium text-sm py-1 px-1.5 border-b-2 border-purple-700' : 'font-medium text-sm py-1 px-1.5'
+                                }
+                                >
+                                    Home
+                            </NavLink>
+                            <NavLink
+                                to='/surveys'
+                                className={({ isActive }) =>
+                                isActive ? 'font-medium text-sm py-1 px-1.5 border-b-2 border-purple-700' : 'font-medium text-sm py-1 px-1.5'
+                                }
+                                >
+                                    Surveys
+                            </NavLink>
+                            <NavLink
+                                to='/pricing'
+                                className={({ isActive }) =>
+                                isActive ? 'font-medium text-sm py-1 px-1.5 border-b-2 border-purple-700' : 'font-medium text-sm py-1 px-1.5'
+                                }
+                                >
+                                    Pricing
+                            </NavLink>
+                        </div>
                     </div>
                     <div onClick={() => setIsOpen(!isOpen)}>
                         <AiOutlineMenu className='lg:hidden'/>
@@ -33,7 +51,7 @@ const Navbar = () => {
                             <NavLink
                                 to='/signin'
                                 className={({ isActive }) =>
-                                isActive ? 'font-medium text-sm py-1 px-1.5 border-b-2 border-purple-700' : 'font-medium text-sm'
+                                isActive ? 'font-medium text-sm py-1 px-1.5 border-b-2 border-purple-700' : 'font-medium text-sm py-1 px-1.5'
                                 }
                                 >
                                     Sign in
@@ -43,7 +61,31 @@ const Navbar = () => {
                 </div>
                 {isOpen && (
                     <div className='absolute rounded-xl shadow-md p-6 w-[200px] bg-white overflow-hidden right-0 top-12 text-sm lg:hidden'>
-                    <div className='flex flex-col cursor-pointer'>
+                    <div className='flex flex-col cursor-pointer gap-2.5'>
+                        <NavLink
+                                to='/'
+                                className={({ isActive }) =>
+                                isActive ? 'font-medium text-sm text-purple-700' : 'font-medium text-sm'
+                                }
+                                >
+                                    Home
+                        </NavLink>
+                        <NavLink
+                                to='/surveys'
+                                className={({ isActive }) =>
+                                isActive ? 'font-medium text-sm text-purple-700' : 'font-medium text-sm'
+                                }
+                                >
+                                    Surveys
+                        </NavLink>
+                        <NavLink
+                                to='/pricing'
+                                className={({ isActive }) =>
+                                isActive ? 'font-medium text-sm text-purple-700' : 'font-medium text-sm'
+                                }
+                                >
+                                    Pricing
+                        </NavLink>
                         <NavLink
                                 to='/signin'
                                 className={({ isActive }) =>
