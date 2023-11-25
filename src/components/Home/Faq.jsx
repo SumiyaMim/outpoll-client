@@ -11,14 +11,14 @@ const Testimonials = () => {
         <Container>
             <SectionTitle heading="FAQ" subHeading="Your go-to guide answering common survey platform questions for a smooth user experience."></SectionTitle>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 md:gap-10 bg-white items-center lg:items-start">
+            <div className="grid grid-cols-1 md:grid-cols-2 md:gap-10 items-center">
                 <div>
                     <div className='w-[300px] md:w-[400px] lg:w-[450px] mx-auto'>
                         <Lottie animationData={faq} loop={true} />
                     </div>
                 </div>
                 <div>
-                    <div className="w-full lg:px-4 lg:pt-10">
+                    <div className="w-full lg:px-4">
                         <div className="mx-auto w-full rounded-2xl lg:p-2">
                             <Disclosure>
                             {({ open }) => (
