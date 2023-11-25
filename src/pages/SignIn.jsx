@@ -5,6 +5,7 @@ import { TbEyeClosed } from 'react-icons/tb';
 import Container from '../components/shared/Container';
 import SocialLogin from '../components/shared/SocialLogin';
 import useAuth from '../hooks/useAuth';
+import { Helmet } from 'react-helmet-async';
 
 const SignIn = () => {
 
@@ -37,6 +38,9 @@ const SignIn = () => {
     
   return (
     <div className="pt-36 pb-20">
+        <Helmet>
+           <title>OutPoll | Sign in</title>
+        </Helmet>    
         <Container>
             <div className="p-8 md:w-3/5 lg:w-2/5 mx-auto rounded-md">
                 <h2 className="text-2xl font-bold text-center mb-12">
