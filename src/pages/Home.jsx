@@ -1,8 +1,8 @@
 import { Helmet } from "react-helmet-async"
-import Banner from "../components/Home/Banner"
-import Testimonials from "../components/Home/Testimonials"
-import Faq from "../components/Home/Faq"
-import Works from "../components/Home/Works"
+import Banner from "../components/home/Banner"
+import Testimonials from "../components/home/Testimonials"
+import Faq from "../components/home/Faq"
+import Works from "../components/home/Works"
 
 const Home = () => {
   return (

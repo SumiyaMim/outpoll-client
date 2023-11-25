@@ -8,6 +8,8 @@ import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Privacy from "../pages/Privacy";
 import Help from "../pages/Help";
+import Surveys from "../pages/Surveys";
+import SurveyDetails from "../components/survey/SurveyDetails";
 
 const router = createBrowserRouter([
     {
@@ -17,16 +19,25 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Home></Home>,
+                element: <Home></Home>
             },   
             {
                 path: '/signin',
-                element: <SignIn></SignIn>,
+                element: <SignIn></SignIn>
             },   
             {
                 path: '/signup',
-                element: <SignUp></SignUp>,
+                element: <SignUp></SignUp>
             },   
+            {
+                path: '/surveys',
+                element: <Surveys></Surveys>
+            },   
+            {
+                path: '/survey-details/:id', 
+                element: <SurveyDetails></SurveyDetails>,
+                loader: ({params}) => fetch(`http://localhost:5000/surveys/${params.id}`)
+            },
             {
                 path: '/about',
                 element: <About></About>
