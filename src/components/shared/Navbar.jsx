@@ -1,11 +1,21 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { AiOutlineMenu } from 'react-icons/ai'
 import Container from './Container'
+import useAuth from '../../hooks/useAuth'
 
 const Navbar = () => {
 
     const [isOpen, setIsOpen] = useState(false)
+
+    const { user, signOutUser } = useAuth();
+    const navigate = useNavigate();
+
+    const handleSignOut = (e) => {
+        e.preventDefault();
+        signOutUser(); 
+        navigate('/signin'); 
+    };
 
   return (
     <div className='fixed w-full bg-white z-10 shadow-sm'>
@@ -61,6 +71,15 @@ const Navbar = () => {
                             </NavLink>
                         </div>
                     </div>
+                    {user?.email ? (
+                        <div onClick={() => setIsOpen(!isOpen)}>
+                            <label tabIndex={0} className="avatar">
+                                <div className="w-9 rounded-full">
+                                    <img src={user.photoURL} alt={user.displayName} className='rounded-full'/>
+                                </div>
+                            </label>
+                        </div>
+                    ) : (
                     <div onClick={() => setIsOpen(!isOpen)}>
                         <AiOutlineMenu className='lg:hidden'/>
                         <div className='hidden lg:block'>
@@ -72,62 +91,90 @@ const Navbar = () => {
                                 >
                                     Sign in
                             </NavLink>
-                        </div>  
+                        </div> 
                     </div>
+                    )
+                    }
                 </div>
                 {isOpen && (
-                    <div className='absolute rounded-xl shadow-md p-6 w-[200px] bg-white overflow-hidden right-0 top-12 text-sm lg:hidden'>
-                    <div className='flex flex-col cursor-pointer gap-2.5'>
-                        <NavLink
-                                to='/'
-                                className={({ isActive }) =>
-                                isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
-                                }
-                                >
-                                    Home
-                        </NavLink>
-                        <NavLink
-                                to='/about'
-                                className={({ isActive }) =>
-                                isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
-                                }
-                                >
-                                    About
-                        </NavLink>
-                        <NavLink
-                                to='/surveys'
-                                className={({ isActive }) =>
-                                isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
-                                }
-                                >
-                                    Surveys
-                        </NavLink>
-                        <NavLink
-                                to='/pricing'
-                                className={({ isActive }) =>
-                                isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
-                                }
-                                >
-                                    Pricing
-                        </NavLink>
-                        <NavLink
-                                to='/contact'
-                                className={({ isActive }) =>
-                                isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
-                                }
-                                >
-                                    Contact
-                        </NavLink>
-                        <NavLink
-                                to='/signin'
-                                className={({ isActive }) =>
-                                isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
-                                }
-                                >
-                                    Sign in
-                        </NavLink>
+                <>
+                    {user?.email && (
+                    <div className='absolute rounded-xl shadow-md p-6 w-[200px] bg-white overflow-hidden right-0 top-16 text-sm hidden lg:block'>
+                       <div className='hidden lg:block'>
+                            <div className='flex flex-col gap-2.5'>
+                                    <>
+                                    <p className='font-medium text-sm'>{user.displayName}</p>
+                                    <div>
+                                        <button onClick={handleSignOut} className='font-medium text-sm hover:text-purple-800'>Sign out</button>
+                                    </div>
+                                    </>
+                            </div>
+                        </div>
                     </div>
+                    )}
+                    <div className='absolute rounded-xl shadow-md p-6 w-[200px] bg-white overflow-hidden right-0 top-16 text-sm lg:hidden'>
+                        <div className='block lg:hidden'>
+                            <div className='flex flex-col gap-2.5'>
+                                {user?.email && <p className='font-medium text-sm'>{user.displayName}</p>}
+                                <NavLink
+                                    to='/'
+                                    className={({ isActive }) =>
+                                    isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
+                                    }
+                                    >
+                                        Home
+                                </NavLink>
+                                <NavLink
+                                    to='/about'
+                                    className={({ isActive }) =>
+                                    isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
+                                    }
+                                    >
+                                        About
+                                </NavLink>
+                                <NavLink
+                                    to='/surveys'
+                                    className={({ isActive }) =>
+                                    isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
+                                    }
+                                    >
+                                        Surveys
+                                </NavLink>
+                                <NavLink
+                                    to='/pricing'
+                                    className={({ isActive }) =>
+                                    isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
+                                    }
+                                    >
+                                        Pricing
+                                </NavLink>
+                                <NavLink
+                                    to='/contact'
+                                    className={({ isActive }) =>
+                                    isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
+                                    }
+                                    >
+                                        Contact
+                                </NavLink>
+                                {user?.email ? (
+                                    <div>
+                                        <button onClick={handleSignOut} className="font-medium text-sm hover:text-purple-800">Sign out</button>
+                                    </div>
+                                    ) : (
+                                    <NavLink
+                                        to='/signin'
+                                        className={({ isActive }) =>
+                                        isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
+                                        }
+                                        >
+                                            Sign in
+                                    </NavLink>
+                                    )
+                                }
+                            </div>
+                        </div> 
                     </div>
+                </>
                 )}
             </div>
           </div>
