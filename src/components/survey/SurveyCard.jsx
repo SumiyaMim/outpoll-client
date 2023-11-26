@@ -6,7 +6,7 @@ const SurveyCard = ({ survey }) => {
     const { title, description, category, total_voted } = survey
 
   return (
-    <div className="shadow rounded-lg p-7 flex flex-col">
+    <div className="shadow rounded-lg p-7 flex flex-col h-full">
       <h4 className="uppercase text-xs text-purple-800 font-semibold">{category}</h4>
       <h1 className="text-lg font-bold mb-1">{title}</h1>
       <p className="text-sm text-zinc-500 mb-5 flex-grow">{description}</p>
