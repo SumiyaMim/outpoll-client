@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { AiOutlineMenu } from 'react-icons/ai'
+import { LuMenu } from "react-icons/lu";
 import Container from './Container'
 import useAuth from '../../hooks/useAuth'
 
@@ -81,7 +81,7 @@ const Navbar = () => {
                         </div>
                     ) : (
                     <div onClick={() => setIsOpen(!isOpen)}>
-                        <AiOutlineMenu className='lg:hidden'/>
+                        <LuMenu className='lg:hidden'/>
                         <div className='hidden lg:block'>
                             <NavLink
                                 to='/signin'
@@ -104,6 +104,18 @@ const Navbar = () => {
                             <div className='flex flex-col gap-2.5'>
                                     <>
                                     <p className='font-medium text-sm'>{user.displayName}</p>
+                                    <NavLink
+                                        to='/my-profile'
+                                        className='font-medium text-sm hover:text-purple-800'
+                                        >
+                                            My Profile
+                                    </NavLink>
+                                    <NavLink
+                                        to='/dashboard'
+                                        className='font-medium text-sm hover:text-purple-800'
+                                        >
+                                            Dashboard
+                                    </NavLink>
                                     <div>
                                         <button onClick={handleSignOut} className='font-medium text-sm hover:text-purple-800'>Sign out</button>
                                     </div>
@@ -116,6 +128,22 @@ const Navbar = () => {
                         <div className='block lg:hidden'>
                             <div className='flex flex-col gap-2.5'>
                                 {user?.email && <p className='font-medium text-sm'>{user.displayName}</p>}
+                                <NavLink
+                                    to='/my-profile'
+                                    className={({ isActive }) =>
+                                    isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
+                                    }
+                                    >
+                                        My Profile
+                                </NavLink>
+                                <NavLink
+                                    to='/dashboard'
+                                    className={({ isActive }) =>
+                                    isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
+                                    }
+                                    >
+                                        Dashboard
+                                </NavLink>
                                 <NavLink
                                     to='/'
                                     className={({ isActive }) =>

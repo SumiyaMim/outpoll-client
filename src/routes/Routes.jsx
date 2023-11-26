@@ -10,6 +10,9 @@ import Privacy from "../pages/Privacy";
 import Help from "../pages/Help";
 import Surveys from "../pages/Surveys";
 import SurveyDetails from "../components/survey/SurveyDetails";
+import Dashboard from "../layout/Dashboard";
+import PrivateRoute from "../routes/PrivateRoute";
+import MyProfile from "../pages/MyProfile";
 
 const router = createBrowserRouter([
     {
@@ -54,7 +57,15 @@ const router = createBrowserRouter([
                 path: '/Help',
                 element: <Help></Help>
             },   
+            {
+                path: '/my-profile',
+                element: <PrivateRoute><MyProfile></MyProfile></PrivateRoute>
+            },   
         ]
+    },
+    {
+        path: "/dashboard",
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
     }
 ])
 
