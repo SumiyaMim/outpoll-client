@@ -180,7 +180,7 @@ const AddSurvey = () => {
                                 <input
                                 type="radio"
                                 className="h-4 w-4"
-                                name="like"
+                                name="dislike"
                                 value="1"
                                 />
                                 <span className="ml-3 text-sm font-medium">1</span>

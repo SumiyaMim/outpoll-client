@@ -195,7 +195,7 @@ const AddSurvey = () => {
                                 <input
                                 type="radio"
                                 className="h-4 w-4"
-                                name="like"
+                                name="dislike"
                                 defaultChecked={dislike === 1}
                                 value="1"
                                 />
