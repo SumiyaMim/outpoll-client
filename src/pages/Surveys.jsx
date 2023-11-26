@@ -34,8 +34,8 @@ const Surveys = () => {
                 setSurveys(res.data);
                 const allCategories = Array.from(new Set(res.data.map(survey => survey.category)));
                 setCategories(allCategories);
-                const alTitle = Array.from(new Set(res.data.map(survey => survey.title)));
-                setTitles(alTitle);
+                const allTitle = Array.from(new Set(res.data.map(survey => survey.title)));
+                setTitles(allTitle);
             })
     }, []);
 

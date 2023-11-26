@@ -6,14 +6,15 @@ import Container from '../components/shared/Container';
 import SocialLogin from '../components/shared/SocialLogin';
 import useAuth from '../hooks/useAuth';
 import { Helmet } from 'react-helmet-async';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 const SignUp = () => {
 
     const [passwordVisible, setPasswordVisible] = useState(false);
-
     const { createUser, handleUpdateProfile, signOutUser } = useAuth();
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic();
 
     // create user
     const handleCreateUser = (e) => {
@@ -27,14 +28,27 @@ const SignUp = () => {
   
         createUser(email, password)
         .then((result) => {
+            const loggedUser = result.user;
+            console.log(loggedUser);
           handleUpdateProfile(name, photo)
-            .then((result) => {
-              signOutUser();
-              navigate('/signin');
+            .then(() => {
+                // create user entry in the database
+                const userInfo = {
+                    name: name,
+                    email: email,
+                    photo: photo,
+                    role: 'user'
+                }
+                axiosPublic.post('/users', userInfo)
+                .then(res => {
+                    if (res.data.insertedId) {
+                        // console.log('user added to the database', userInfo)
+                        signOutUser(); 
+                        navigate('/signin');
+                    }
+                })
             })
-            .catch((error) => {
-              console.error(error);
-            });
+            .catch(error => console.log(error))
         })
         .catch((error) => {
           if (error.code === 'auth/email-already-in-use') {

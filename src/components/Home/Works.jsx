@@ -3,7 +3,7 @@ import SectionTitle from "../shared/SectionTitle"
 
 const Works = () => {
   return (
-    <div className="my-20 max-w-7xl mx-auto bg-purple-100 py-20">
+    <div className="my-20 max-w-7xl mx-auto bg-purple-100 py-20 relative z-0">
         <Container>
             <SectionTitle heading="How It Works" subHeading="Empower decisions through interactive surveys, engaging audiences, and deriving insights on our secure platform."></SectionTitle>
             <div className="bg-white p-6 md:p-8 lg:p-10 rounded-md">
