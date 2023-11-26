@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const SurveyCard = ({ survey }) => {
 
-    const { title, description, category, total_voted } = survey
+    const { title, description, category, vote } = survey
 
   return (
     <div className="shadow rounded-lg p-7 flex flex-col h-full">
@@ -11,7 +11,7 @@ const SurveyCard = ({ survey }) => {
       <h1 className="text-lg font-bold mb-1">{title}</h1>
       <p className="text-sm text-zinc-500 mb-5 flex-grow">{description}</p>
       <div className="flex justify-between items-center">
-        <p className="font-medium text-zinc-600">{total_voted} votes</p>
+        <p className="font-medium text-zinc-600">{vote} votes</p>
         <Link to={`/survey-details/${survey._id}`}>
             <button className="flex items-center gap-2 font-medium text-purple-800">
                 View More

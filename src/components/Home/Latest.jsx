@@ -31,7 +31,7 @@ const Latest = () => {
                             <h4 className="uppercase text-xs text-purple-800 font-semibold">{survey.category}</h4>
                             <h1 className="text-lg font-bold mb-1">{survey.title}</h1>
                             <p className="text-sm text-zinc-500 mb-2 flex-grow">{survey.description}</p>
-                            <p className="mb-7 text-sm font-medium text-zinc-600">Last Updated:{' '} &nbsp;
+                            <p className="mb-7 text-sm font-medium text-zinc-500">Last Updated:{' '} &nbsp;
                             {new Date(survey.updatedAt)
                                 .toLocaleDateString('en-GB', {
                                 day: 'numeric',

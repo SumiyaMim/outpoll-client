@@ -32,7 +32,7 @@ const Featured = () => {
                             <h1 className="text-lg font-bold mb-1">{survey.title}</h1>
                             <p className="text-sm text-zinc-500 mb-5 flex-grow">{survey.description}</p>
                             <div className="flex justify-between items-center">
-                                <p className="font-medium text-zinc-600">{survey.total_voted} votes</p>
+                                <p className="font-medium text-zinc-600">{survey.vote} votes</p>
                                 <Link to={`/survey-details/${survey._id}`}>
                                     <button className="flex items-center gap-2 font-medium text-purple-800">
                                         View More

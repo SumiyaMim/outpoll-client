@@ -4,19 +4,55 @@ import SectionTitle from "../components/shared/SectionTitle"
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useEffect, useState } from "react";
 import SurveyCard from "../components/survey/SurveyCard";
+import { useQuery } from "@tanstack/react-query";
+import Spinner from '../components/shared/Spinner'
 
 const Surveys = () => {
 
     const axiosPublic = useAxiosPublic();
+    const [vote, setVote] = useState('')
+    const [title, setTitle] = useState('');
+    const [category, setCategory] = useState('');
     const [surveys, setSurveys] = useState([]);
+    const [titles, setTitles] = useState([]);
+    const [categories, setCategories] = useState([]);
+
+    const { data: allSurveys = [], isLoading } = useQuery({
+        queryKey: ['surveys', vote, title, category],
+        queryFn: async () => {
+            const res = await axiosPublic.get(`/surveys?sortField=vote&sortOrder=${vote}&title=${title}&category=${category}`);
+            return res.data;
+        },
+        onSuccess: (data) => {
+            setSurveys(data);
+        }
+    })
 
     useEffect(() => {
         axiosPublic.get('/surveys')
-        .then((res) => {
-            setSurveys(res.data);
-        });
+            .then((res) => {
+                setSurveys(res.data);
+                const allCategories = Array.from(new Set(res.data.map(survey => survey.category)));
+                setCategories(allCategories);
+                const alTitle = Array.from(new Set(res.data.map(survey => survey.title)));
+                setTitles(alTitle);
+            })
     }, []);
 
+    useEffect(() => {
+        let filteredSurveys = [...allSurveys];
+
+        if (category !== '') {
+            filteredSurveys = filteredSurveys.filter(survey => survey.category === category);
+        }
+
+        if (title !== '') {
+            filteredSurveys = filteredSurveys.filter(survey => survey.title === title);
+        }
+
+        setSurveys(filteredSurveys);
+    }, [title, category, allSurveys]);
+    
   return (
     <div className="pt-36">
         <Helmet>
@@ -29,29 +65,39 @@ const Surveys = () => {
             <h4 className="text-lg md:text-sm lg:text-lg font-medium">Filter by</h4>
             <div>
                 <label className="mb-1 text-sm font-medium text-gray-900 ">Title</label>
-                <select className="bg-zinc-50 border border-zinc-300 focus:outline-none text-zinc-900 text-sm rounded-md block w-72 md:w-64 lg:w-72 p-2">
+                <select 
+                onChange={(e) => setTitle(e.target.value)}
+                className="bg-zinc-50 border border-zinc-300 focus:outline-none text-zinc-900 text-sm rounded-md block w-72 md:w-64 lg:w-72 p-2"
+                >
                     <option disabled selected value="">Choose one</option>
-                    {surveys.map((survey) => (
-                        <option key={survey._id} value={survey.title}>
-                            {survey.title}
+                    {titles.map((title) => (
+                        <option key={title} value={title}>
+                            {title}
                         </option>
                     ))}
                 </select>
             </div>
             <div>
                 <label className="mb-1 text-sm font-medium text-gray-900">Category</label>
-                <select className="bg-zinc-50 border border-zinc-300 focus:outline-none text-zinc-900 text-sm rounded-md block w-72 md:w-36 lg:w-72 p-2">
+                <select 
+                onChange={(e) => setCategory(e.target.value)}
+                value={category}
+                className="bg-zinc-50 border border-zinc-300 focus:outline-none text-zinc-900 text-sm rounded-md block w-72 md:w-36 lg:w-72 p-2"
+                >
                     <option disabled selected value="">Choose one</option>
-                    {surveys.map((survey) => (
-                        <option key={survey._id} value={survey.category}>
-                            {survey.category}
+                    {categories.map((category) => (
+                        <option key={category} value={category}>
+                            {category}
                         </option>
                     ))}
                 </select>
             </div>
             <div>
-                <label className="mb-1 text-sm font-medium text-gray-900 ">Price</label>
-                <select className="bg-zinc-50 border border-zinc-300 focus:outline-none text-zinc-900 text-sm rounded-md block w-72 md:w-36 lg:w-72 p-2">
+                <label className="mb-1 text-sm font-medium text-gray-900 ">Vote</label>
+                <select 
+                onChange={(e) => setVote(e.target.value)}
+                className="bg-zinc-50 border border-zinc-300 focus:outline-none text-zinc-900 text-sm rounded-md block w-72 md:w-36 lg:w-72 p-2"
+                >
                     <option disabled selected>Choose one</option>
                     <option value='asc'>From low to high</option>
                     <option value='desc'>From high to low</option>
@@ -59,9 +105,13 @@ const Surveys = () => {
             </div>
         </div>
 
+        {isLoading ? (
+            <Spinner/>
+        ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-20">
             {surveys.map((survey) => <SurveyCard key={survey._id} survey={survey}></SurveyCard>)}
         </div>
+        )}
       </Container>
     </div>
   )
