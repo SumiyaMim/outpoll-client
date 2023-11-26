@@ -13,6 +13,9 @@ import SurveyDetails from "../components/survey/SurveyDetails";
 import Dashboard from "../layout/Dashboard";
 import PrivateRoute from "../routes/PrivateRoute";
 import MyProfile from "../pages/MyProfile";
+import AddSurvey from "../pages/Dashboard/AddSurvey";
+import ManageSurveys from "../pages/Dashboard/ManageSurveys";
+import UpdateSurvey from "../pages/Dashboard/UpdateSurvey";
 
 const router = createBrowserRouter([
     {
@@ -65,7 +68,22 @@ const router = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        children: [
+            {
+                path: 'add-survey',
+                element: <PrivateRoute><AddSurvey></AddSurvey></PrivateRoute>
+            },   
+            {
+                path: 'manage-surveys',
+                element: <PrivateRoute><ManageSurveys></ManageSurveys></PrivateRoute>
+            },   
+            {
+                path: 'update-survey/:id',
+                element: <PrivateRoute><UpdateSurvey></UpdateSurvey></PrivateRoute>,
+                loader: ({params}) => fetch(`http://localhost:5000/surveys/${params.id}`)
+            },   
+        ]
     }
 ])
 

@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { GrLogout } from 'react-icons/gr'
 import { LuMenu } from "react-icons/lu";
 import useAuth from '../../hooks/useAuth'
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { FaHome } from "react-icons/fa";
+import { RiSurveyFill } from "react-icons/ri";
+import { MdManageHistory } from "react-icons/md";
 
 const Sidebar = () => {
 
@@ -45,10 +47,23 @@ const Sidebar = () => {
 
           {/* Nav Items */}
           <div className='flex flex-col justify-between flex-1 mt-6'>
-            <nav>
-             
+            <NavLink to='/dashboard/add-survey' 
+            className={({ isActive }) =>
+            isActive ? 'flex w-full items-center px-4 py-2 mt-5 bg-purple-800 text-white rounded-md' : 'flex w-full items-center px-4 py-2 mt-5 text-gray-600 rounded-md'
+            }
+            >
+              <RiSurveyFill className='w-5 h-5' />
+              <span className='mx-4 font-medium'>Add Survey</span>
+            </NavLink>
 
-            </nav>
+            <NavLink to='/dashboard/manage-surveys' 
+            className={({ isActive }) =>
+            isActive ? 'flex w-full items-center px-4 py-2 mt-5 bg-purple-800 text-white rounded-md' : 'flex w-full items-center px-4 py-2 mt-5 text-gray-600 rounded-md'
+            }
+            >
+              <MdManageHistory className='w-5 h-5' />
+              <span className='mx-4 font-medium'>Manage Surveys</span>
+            </NavLink>
           </div>
         </div>
 
@@ -56,12 +71,10 @@ const Sidebar = () => {
           <hr />
           <Link to='/' className='flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-purple-800 hover:text-white transition-colors duration-300 transform rounded-md'>
             <FaHome className='w-5 h-5' />
-
             <span className='mx-4 font-medium'>Home</span>
           </Link>
           <button onClick={signOutUser} className='flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-purple-800 hover:text-white transition-colors duration-300 transform rounded-md'>
             <GrLogout className='w-5 h-5' />
-
             <span className='mx-4 font-medium'>Sign out</span>
           </button>
         </div>

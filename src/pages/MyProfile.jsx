@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Container from "../components/shared/Container";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
@@ -9,6 +10,9 @@ const MyProfile = () => {
 
   return (
     <div className="pt-40 pb-20">
+       <Helmet>
+           <title>My Profile</title>
+        </Helmet>    
       <Container>
       <div className='shadow border py-16 px-10 rounded-xl md:mx-40 lg:mx-96'>
             <div className="w-20 mx-auto">

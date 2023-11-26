@@ -7,7 +7,7 @@ import { IoFlag } from "react-icons/io5";
 const SurveyDetails = () => {
 
     const survey = useLoaderData();
-    const { title, description, updatedAt, deadline, category, options, like, dislike, report } = survey
+    const { title, description, timestamp, deadline, category, options, like, dislike, report } = survey
 
   return (
     <div className="pt-36 pb-20">
@@ -26,7 +26,7 @@ const SurveyDetails = () => {
                     <hr />
                     <div className="flex items-center gap-2 md:gap-3 text-[12px] md:text-sm text-zinc-500 my-2">
                         <p>Last Updated:{' '} &nbsp;
-                            {new Date(updatedAt)
+                            {new Date(timestamp)
                                 .toLocaleDateString('en-GB', {
                                 day: 'numeric',
                                 month: 'long',

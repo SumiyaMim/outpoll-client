@@ -13,7 +13,7 @@ const Latest = () => {
     useEffect(() => {
         axiosPublic.get('/surveys')
         .then((res) => {
-            const sortedSurveys = res.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+            const sortedSurveys = res.data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
             const latestSurveys = sortedSurveys.slice(0, 3);
             setLatestSurveys(latestSurveys);
         });
@@ -32,7 +32,7 @@ const Latest = () => {
                             <h1 className="text-lg font-bold mb-1">{survey.title}</h1>
                             <p className="text-sm text-zinc-500 mb-2 flex-grow">{survey.description}</p>
                             <p className="mb-7 text-sm font-medium text-zinc-500">Last Updated:{' '} &nbsp;
-                            {new Date(survey.updatedAt)
+                            {new Date(survey.timestamp)
                                 .toLocaleDateString('en-GB', {
                                 day: 'numeric',
                                 month: 'long',
