@@ -1,51 +1,30 @@
 import { Helmet } from "react-helmet-async"
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import { useQuery } from "@tanstack/react-query";
+import { FiEdit } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
-const ManageSurveys = () => {
+const MySurveys = () => {
 
+    const { user } = useAuth()
     const axiosSecure = useAxiosSecure();
-    // const [surveys, setSurveys] = useState([]);
+    const [surveys, setSurveys] = useState([]);
 
-    // useEffect(() => {
-    //     axiosSecure.get('/surveys')
-    //     .then((res) => {
-    //         setSurveys(res.data);
-    //     });
-    // }, []);
-
-    const { data: surveys=[], refetch } = useQuery({
-      queryKey: ['surveys'],
-      queryFn: async () => await axiosSecure.get('/surveys')
-    })
-
-     // update survey status
-     const handleStatus = survey => {
-      axiosSecure.patch(`/surveys/admin/${survey._id}`)
-      .then(res =>{
-          console.log(res.data)
-          if(res.data.modifiedCount > 0){
-              refetch();
-              Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: `Status Updated!`,
-                  showConfirmButton: false,
-                  timer: 1500
-                });
-          }
-      })
-    }
+    useEffect(() => {
+        axiosSecure.get(`/surveys/surveyor/${user?.email}`)
+        .then((res) => {
+            setSurveys(res.data);
+        });
+    }, []);
 
   return (
     <div className="py-14 px-6 lg:px-10">
       <Helmet>
-           <title>Dashboard | Manage Survey</title>
+           <title>Dashboard | My Survey</title>
         </Helmet>    
         <div className="mb-10">
-            <h3 className="text-2xl font-semibold w-fit mx-auto text-center mb-1.5">Manage Surveys</h3>
+            <h3 className="text-2xl font-semibold w-fit mx-auto text-center mb-1.5">My Surveys</h3>
             <hr className="border-[1.5px] w-12 border-purple-700 mx-auto mb-5"/>
         </div>
 
@@ -62,6 +41,11 @@ const ManageSurveys = () => {
                     <th
                       className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-semibold'
                     >
+                      Category
+                    </th>
+                    <th
+                      className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-semibold'
+                    >
                       Status
                     </th>
                     <th
@@ -73,20 +57,21 @@ const ManageSurveys = () => {
                   </thead>
                   <tbody>
                   {/* Table Row Data */}
-                  {surveys && surveys?.data?.map(survey => (
+                  {surveys && surveys.map(survey => (
                     <tr key={survey._id}>
                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                             <p className='text-gray-900 whitespace-no-wrap'>{survey?.title}</p>
                         </td>
                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                            <p className='text-gray-900 whitespace-no-wrap'>{survey?.category}</p>
+                        </td>
+                        <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                             <p className='text-gray-900 whitespace-no-wrap'>{survey?.status}</p>
                         </td>
-                        <td className='px-5 py-5 border-b border-gray-200 bg-white text-xs font-medium'>
-                            <button onClick={() => handleStatus(survey)}
-                            className="bg-purple-800 text-white rounded-md p-2"
-                            >
-                              Update
-                            </button>
+                        <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
+                        <Link to={`/dashboard/update-survey/${survey._id}`}>
+                            <button className="bg-purple-800 text-white rounded-md p-2"><FiEdit></FiEdit></button>
+                        </Link>
                         </td>
                     </tr>
                   )
@@ -95,9 +80,8 @@ const ManageSurveys = () => {
                 </table>
             </div>
         </div>
-
     </div>
   )
 }
 
-export default ManageSurveys
+export default MySurveys

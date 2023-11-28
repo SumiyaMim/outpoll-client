@@ -39,11 +39,11 @@ const AddSurvey = () => {
         const { Yes: yesCount, No: noCount } = optionCounts;
 
         const votes = [yesCount, noCount];
-        const vote = yesCount + noCount;
+        // const vote = yesCount + noCount;
           
 
-        const newSurvey = { title, description, category, deadline, options, like, dislike, report, timestamp, votes, vote, status: 'publish', surveyor: user.email }
-        console.log(newSurvey)
+        const newSurvey = { title, description, category, deadline, options, like, dislike, report, timestamp, votes, status: 'publish', surveyor: user.email }
+        // console.log(newSurvey)
 
         // send jobs to the server
         axiosPublic.post('/surveys', newSurvey)

@@ -10,7 +10,7 @@ import Spinner from '../components/shared/Spinner'
 const Surveys = () => {
 
     const axiosPublic = useAxiosPublic();
-    const [vote, setVote] = useState('')
+    const [votes, setVotes] = useState('')
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('');
     const [surveys, setSurveys] = useState([]);
@@ -18,9 +18,9 @@ const Surveys = () => {
     const [categories, setCategories] = useState([]);
 
     const { data: allSurveys = [], isLoading } = useQuery({
-        queryKey: ['surveys', vote, title, category],
+        queryKey: ['surveys', votes, title, category],
         queryFn: async () => {
-            const res = await axiosPublic.get(`/surveys?sortField=vote&sortOrder=${vote}&title=${title}&category=${category}`);
+            const res = await axiosPublic.get(`/surveys?sortField=votes&sortOrder=${votes}&title=${title}&category=${category}`);
             return res.data;
         },
         onSuccess: (data) => {
@@ -95,7 +95,7 @@ const Surveys = () => {
             <div>
                 <label className="mb-1 text-sm font-medium text-gray-900 ">Vote</label>
                 <select 
-                onChange={(e) => setVote(e.target.value)}
+                onChange={(e) => setVotes(e.target.value)}
                 className="bg-zinc-50 border border-zinc-300 focus:outline-none text-zinc-900 text-sm rounded-md block w-72 md:w-36 lg:w-72 p-2"
                 >
                     <option disabled selected>Choose one</option>

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { LuMenu } from "react-icons/lu";
 import Container from './Container'
 import useAuth from '../../hooks/useAuth'
+import useRole from '../../hooks/useRole';
 
 const Navbar = () => {
 
@@ -10,6 +11,8 @@ const Navbar = () => {
 
     const { user, signOutUser } = useAuth();
     const navigate = useNavigate();
+    const {role} = useRole(user?.email)
+    // console.log(role)
 
     const handleSignOut = (e) => {
         e.preventDefault();
@@ -72,12 +75,22 @@ const Navbar = () => {
                         </div>
                     </div>
                     {user?.email ? (
+                        <div className='flex items-center gap-5'>
                         <div onClick={() => setIsOpen(!isOpen)}>
                             <label tabIndex={0} className="avatar">
                                 <div className="w-9 rounded-full">
                                     <img src={user.photoURL} alt={user.displayName} className='rounded-full'/>
                                 </div>
                             </label>
+                        </div>
+                        {role === 'user' ? (
+                            <NavLink
+                                to='/payment'
+                                className='font-medium bg-purple-800 rounded-md text-white text-xs py-2 px-4 uppercase'
+                                >
+                                Upgrade to pro
+                            </NavLink>
+                        ) : null}
                         </div>
                     ) : (
                     <div onClick={() => setIsOpen(!isOpen)}>
@@ -110,12 +123,16 @@ const Navbar = () => {
                                         >
                                             My Profile
                                     </NavLink>
-                                    <NavLink
-                                        to='/dashboard'
-                                        className='font-medium text-sm hover:text-purple-800'
-                                        >
-                                            Dashboard
-                                    </NavLink>
+
+                                    {role === 'surveyor' || role === 'admin' ? (
+                                            <NavLink
+                                                to={role === 'surveyor' ? '/dashboard/add-survey' : '/dashboard/manage-users'}
+                                                className='font-medium text-sm hover:text-purple-800'
+                                            >
+                                                Dashboard
+                                            </NavLink>
+                                    ) : null}
+                                    
                                     <div>
                                         <button onClick={handleSignOut} className='font-medium text-sm hover:text-purple-800'>Sign out</button>
                                     </div>
@@ -136,14 +153,18 @@ const Navbar = () => {
                                     >
                                         My Profile
                                 </NavLink>
+
+                                {role === 'surveyor' || role === 'admin' ? (
                                 <NavLink
-                                    to='/dashboard'
+                                    to={role === 'surveyor' ? '/dashboard/add-survey' : '/dashboard/manage-users'}
                                     className={({ isActive }) =>
                                     isActive ? 'font-medium text-sm text-purple-800' : 'font-medium text-sm'
                                     }
                                     >
                                         Dashboard
                                 </NavLink>
+                                ) : null}
+
                                 <NavLink
                                     to='/'
                                     className={({ isActive }) =>

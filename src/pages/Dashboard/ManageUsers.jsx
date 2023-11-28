@@ -1,29 +1,21 @@
+import { useQuery } from "@tanstack/react-query"
 import { Helmet } from "react-helmet-async"
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { useQuery } from "@tanstack/react-query";
 
-const ManageSurveys = () => {
+const ManageUsers = () => {
 
     const axiosSecure = useAxiosSecure();
-    // const [surveys, setSurveys] = useState([]);
 
-    // useEffect(() => {
-    //     axiosSecure.get('/surveys')
-    //     .then((res) => {
-    //         setSurveys(res.data);
-    //     });
-    // }, []);
-
-    const { data: surveys=[], refetch } = useQuery({
-      queryKey: ['surveys'],
-      queryFn: async () => await axiosSecure.get('/surveys')
+    const { data: users=[], refetch } = useQuery({
+        queryKey: ['users'],
+        queryFn: async () => await axiosSecure.get('/users')
     })
+    // console.log(users)
 
-     // update survey status
-     const handleStatus = survey => {
-      axiosSecure.patch(`/surveys/admin/${survey._id}`)
+    // update role
+    const handleMakeRole = user => {
+      axiosSecure.patch(`/users/admin/${user._id}`)
       .then(res =>{
           console.log(res.data)
           if(res.data.modifiedCount > 0){
@@ -31,24 +23,23 @@ const ManageSurveys = () => {
               Swal.fire({
                   position: "center",
                   icon: "success",
-                  title: `Status Updated!`,
+                  title: `${user.name} is an Surveyor Now!`,
                   showConfirmButton: false,
                   timer: 1500
                 });
           }
       })
     }
-
+      
   return (
     <div className="py-14 px-6 lg:px-10">
       <Helmet>
-           <title>Dashboard | Manage Survey</title>
+           <title>Dashboard | Manage Users</title>
         </Helmet>    
         <div className="mb-10">
-            <h3 className="text-2xl font-semibold w-fit mx-auto text-center mb-1.5">Manage Surveys</h3>
+            <h3 className="text-2xl font-semibold w-fit mx-auto text-center mb-1.5">Manage Users</h3>
             <hr className="border-[1.5px] w-12 border-purple-700 mx-auto mb-5"/>
         </div>
-
         <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
             <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
               <table className='min-w-full leading-normal'>
@@ -57,12 +48,12 @@ const ManageSurveys = () => {
                     <th
                       className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-semibold'
                     >
-                      Title
+                      Email
                     </th>
                     <th
                       className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-semibold'
                     >
-                      Status
+                      Role
                     </th>
                     <th
                       className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-semibold'
@@ -73,20 +64,18 @@ const ManageSurveys = () => {
                   </thead>
                   <tbody>
                   {/* Table Row Data */}
-                  {surveys && surveys?.data?.map(survey => (
-                    <tr key={survey._id}>
+                  {users && users?.data?.map(user => (
+                    <tr key={user._id}>
                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                            <p className='text-gray-900 whitespace-no-wrap'>{survey?.title}</p>
+                            <p className='text-gray-900 whitespace-no-wrap'>{user?.email}</p>
                         </td>
                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-                            <p className='text-gray-900 whitespace-no-wrap'>{survey?.status}</p>
+                            <p className='text-gray-900 whitespace-no-wrap'>{user?.role}</p>
                         </td>
                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-xs font-medium'>
-                            <button onClick={() => handleStatus(survey)}
-                            className="bg-purple-800 text-white rounded-md p-2"
-                            >
-                              Update
-                            </button>
+                            <button 
+                            onClick={() => handleMakeRole(user)}
+                            className="bg-purple-800 text-white rounded-md p-2">Update</button>                            
                         </td>
                     </tr>
                   )
@@ -95,9 +84,8 @@ const ManageSurveys = () => {
                 </table>
             </div>
         </div>
-
     </div>
   )
 }
 
-export default ManageSurveys
+export default ManageUsers

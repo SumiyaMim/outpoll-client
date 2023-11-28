@@ -13,7 +13,7 @@ const Featured = () => {
     useEffect(() => {
         axiosPublic.get('/surveys')
         .then((res) => {
-            const sortedSurveys = res.data.sort((a, b) => b.total_voted - a.total_voted);
+            const sortedSurveys = res.data.sort((a, b) => b.votes - a.votes);
             const topSurveys = sortedSurveys.slice(0, 3);
             setTopSurveys(topSurveys);
         });
@@ -32,7 +32,7 @@ const Featured = () => {
                             <h1 className="text-lg font-bold mb-1">{survey.title}</h1>
                             <p className="text-sm text-zinc-500 mb-5 flex-grow">{survey.description}</p>
                             <div className="flex justify-between items-center">
-                                <p className="font-medium text-zinc-600">{survey.vote} votes</p>
+                                <p className="font-medium text-zinc-600">{survey.votes} votes</p>
                                 <Link to={`/survey-details/${survey._id}`}>
                                     <button className="flex items-center gap-2 font-medium text-purple-800">
                                         View More

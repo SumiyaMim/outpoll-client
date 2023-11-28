@@ -5,7 +5,7 @@ import useRole from "../hooks/useRole";
 
 const MyProfile = () => {
 
-  const { user } = useAuth()
+  const { user } = useAuth();
   const { role } = useRole(user.email);
 
   return (

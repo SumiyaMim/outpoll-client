@@ -3,14 +3,18 @@ import { GrLogout } from 'react-icons/gr'
 import { LuMenu } from "react-icons/lu";
 import useAuth from '../../hooks/useAuth'
 import { Link, NavLink } from 'react-router-dom';
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaUsers } from "react-icons/fa";
 import { RiSurveyFill } from "react-icons/ri";
-import { MdManageHistory } from "react-icons/md";
+import { MdManageHistory, MdPayments, MdFeedback } from "react-icons/md";
+import useRole from '../../hooks/useRole';
+import { VscFeedback } from "react-icons/vsc";
 
 const Sidebar = () => {
 
-  const { signOutUser } = useAuth()
+  const { user, signOutUser } = useAuth()
   const [isActive, setActive] = useState(false)
+  const {role} = useRole(user.email)
+  // console.log(role)
 
   // Sidebar Responsive Handler
   const handleToggle = () => {
@@ -47,13 +51,15 @@ const Sidebar = () => {
 
           {/* Nav Items */}
           <div className='flex flex-col justify-between flex-1 mt-6'>
-            <NavLink to='/dashboard/add-survey' 
+            {role === 'admin' && 
+            <>
+            <NavLink to='/dashboard/manage-users' 
             className={({ isActive }) =>
             isActive ? 'flex w-full items-center px-4 py-2 mt-5 bg-purple-800 text-white rounded-md' : 'flex w-full items-center px-4 py-2 mt-5 text-gray-600 rounded-md'
             }
             >
-              <RiSurveyFill className='w-5 h-5' />
-              <span className='mx-4 font-medium'>Add Survey</span>
+              <FaUsers className='w-5 h-5' />
+              <span className='mx-4 font-medium'>Manage Users</span>
             </NavLink>
 
             <NavLink to='/dashboard/manage-surveys' 
@@ -64,6 +70,66 @@ const Sidebar = () => {
               <MdManageHistory className='w-5 h-5' />
               <span className='mx-4 font-medium'>Manage Surveys</span>
             </NavLink>
+
+            <NavLink to='/dashboard/survey-responses' 
+            className={({ isActive }) =>
+            isActive ? 'flex w-full items-center px-4 py-2 mt-5 bg-purple-800 text-white rounded-md' : 'flex w-full items-center px-4 py-2 mt-5 text-gray-600 rounded-md'
+            }
+            >
+              <MdFeedback className='w-5 h-5' />
+              <span className='mx-4 font-medium'>Survey Responses</span>
+            </NavLink>
+
+            <NavLink to='/dashboard/payment-history' 
+            className={({ isActive }) =>
+            isActive ? 'flex w-full items-center px-4 py-2 mt-5 bg-purple-800 text-white rounded-md' : 'flex w-full items-center px-4 py-2 mt-5 text-gray-600 rounded-md'
+            }
+            >
+              <MdPayments className='w-5 h-5' />
+              <span className='mx-4 font-medium'>Payment History</span>
+            </NavLink>
+            </>
+            }
+
+            {role === 'surveyor' && 
+            <>
+             <NavLink to='/dashboard/add-survey' 
+            className={({ isActive }) =>
+            isActive ? 'flex w-full items-center px-4 py-2 mt-5 bg-purple-800 text-white rounded-md' : 'flex w-full items-center px-4 py-2 mt-5 text-gray-600 rounded-md'
+            }
+            >
+              <RiSurveyFill className='w-5 h-5' />
+              <span className='mx-4 font-medium'>Add Survey</span>
+            </NavLink>
+
+            <NavLink to='/dashboard/my-surveys' 
+            className={({ isActive }) =>
+            isActive ? 'flex w-full items-center px-4 py-2 mt-5 bg-purple-800 text-white rounded-md' : 'flex w-full items-center px-4 py-2 mt-5 text-gray-600 rounded-md'
+            }
+            >
+              <MdManageHistory className='w-5 h-5' />
+              <span className='mx-4 font-medium'>My Surveys</span>
+            </NavLink>
+
+            <NavLink to='/dashboard/survey-responses' 
+            className={({ isActive }) =>
+            isActive ? 'flex w-full items-center px-4 py-2 mt-5 bg-purple-800 text-white rounded-md' : 'flex w-full items-center px-4 py-2 mt-5 text-gray-600 rounded-md'
+            }
+            >
+              <MdFeedback className='w-5 h-5' />
+              <span className='mx-4 font-medium'>Survey Responses</span>
+            </NavLink>
+            <NavLink to='/dashboard/feedback' 
+            className={({ isActive }) =>
+            isActive ? 'flex w-full items-center px-4 py-2 mt-5 bg-purple-800 text-white rounded-md' : 'flex w-full items-center px-4 py-2 mt-5 text-gray-600 rounded-md'
+            }
+            >
+              <VscFeedback className='w-5 h-5' />
+              <span className='mx-4 font-medium'>Feedback</span>
+            </NavLink>
+            </>
+            }
+
           </div>
         </div>
 
