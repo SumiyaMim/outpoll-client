@@ -16,6 +16,8 @@ const SurveyDetails = () => {
     const { _id, title, description, timestamp, deadline, category, options, like, dislike, report } = survey
     // console.log(survey)
 
+    const isDeadlineOver = new Date() > new Date(deadline);
+
     const [likeStatus, setLikeStatus] = useState(like === 1);
     const [dislikeStatus, setDislikeStatus] = useState(dislike === 1);
     const [reportStatus, setReportStatus] = useState(report === 1);
@@ -24,6 +26,14 @@ const SurveyDetails = () => {
     const axiosSecure = useAxiosSecure();
     const axiosPublic = useAxiosPublic();
     const [comments, setComments] = useState([]);
+    const [userRole, setUserRole] = useState(null); 
+    const [userSurveyParticipants, setUserSurveyParticipants] = useState([]);
+    const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
+    useEffect(() => {
+        const userRole = role; 
+        setUserRole(userRole);
+    }, [role]);
 
     const handleLikeClick = () => {
         setLikeStatus(!likeStatus);
@@ -39,6 +49,7 @@ const SurveyDetails = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
+        setIsFormSubmitted(true);
         const form = e.target;
         const formData = new FormData(form);
         const selectedOption = formData.get('options');
@@ -83,20 +94,37 @@ const SurveyDetails = () => {
         // console.log(participateSurvey)
 
         // send participate survey to the server
-        axiosSecure.post('/participants', participateSurvey)
-        .then(res => {    
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: ``,
-            showConfirmButton: false,
-            timer: 1500
-          });
-        })
-
+        if ((role === 'user' || role === 'pro user')) {
+            axiosSecure.post('/participants', participateSurvey)
+            .then(res => {    
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: ``,
+                showConfirmButton: false,
+                timer: 1500
+            });
+            })
+        }
     }
-    
 
+    useEffect(() => {
+    if(user && user.email){
+        axiosPublic.get('/participants', {
+            params: {
+                participant_email: user.email,
+                surveyId: _id
+            }
+        })
+        .then(res => {
+            const userSurveyParticipants = res.data.filter(participant => {
+                return participant.participant_email === user.email && participant.surveyId === _id;
+            });
+            setUserSurveyParticipants(userSurveyParticipants);
+        })
+    }
+    }, []);
+      
     const handleCommentSubmit = e => {
         e.preventDefault();
 
@@ -116,17 +144,19 @@ const SurveyDetails = () => {
         // console.log(commentSurvey)
 
         // send participate survey to the server
-        axiosSecure.post('/comments', commentSurvey)
-        .then(res => {    
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: ``,
-              showConfirmButton: false,
-              timer: 1500
-            });
-            window.location.reload();
-        })
+        if (role === 'pro user') {
+            axiosSecure.post('/comments', commentSurvey)
+            .then(res => {    
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: ``,
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                window.location.reload();
+            })
+        }
     }
 
     useEffect(() => {
@@ -199,24 +229,28 @@ const SurveyDetails = () => {
                             <div className="mt-5 flex justify-between items-center">
                                 <button 
                                 type="submit" 
-                                className="py-2 px-6 text-xs font-medium text-center text-white bg-purple-800 rounded-md">
+                                disabled={isDeadlineOver || (userRole !== 'user' && userRole !== 'pro user') || userSurveyParticipants.length > 0 || isFormSubmitted}
+                                className="py-2 px-6 text-xs font-medium text-center text-white bg-purple-800 rounded-md disabled:bg-purple-200">
                                     Submit
                                 </button>
                                 <div className="h-10 flex items-center gap-4 text-lg">
                                     <button
                                         onClick={handleLikeClick}
+                                        disabled={userRole !== 'user' && userRole !== 'pro user'}
                                         className={`${likeStatus ? 'text-purple-800' : 'text-zinc-800'}`}
                                     >
                                         <AiFillLike />
                                     </button>
                                     <button
                                         onClick={handleDislikeClick}
+                                        disabled={userRole !== 'user' && userRole !== 'pro user'}
                                         className={`${dislikeStatus ? 'text-purple-800' : 'text-zinc-800'}`}
                                     >
                                         <AiFillDislike />
                                     </button>
                                     <button
                                         onClick={handleReportClick}
+                                        disabled={userRole !== 'user' && userRole !== 'pro user'}
                                         className={`${reportStatus ? 'text-purple-800' : 'text-zinc-800'}`}
                                     >
                                         <IoFlag />
@@ -238,7 +272,10 @@ const SurveyDetails = () => {
                                 ></textarea>
                             </div>
                             <div className="px-3 py-2 border-t dark:border-gray-600">
-                                <button type="submit" className="py-2 px-6 text-xs font-medium text-center text-white bg-purple-800 rounded-md">
+                                <button 
+                                type="submit" 
+                                disabled={userRole !== 'pro user'}
+                                className="py-2 px-6 text-xs font-medium text-center text-white bg-purple-800 rounded-md disabled:bg-purple-200">
                                     Send
                                 </button>
             

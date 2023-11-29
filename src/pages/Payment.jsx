@@ -16,7 +16,7 @@ const Payment = () => {
         </Helmet>    
         <Container>
         <SectionTitle heading="Payment" subHeading="Payment for get exclusive survey features and enhanced analytics. Elevate your survey experience today!"></SectionTitle>
-        <div className="md:px-20">
+        <div className="md:px-20 lg:px-80">
             <Elements stripe={stripePromise}>
                 <CheckoutForm></CheckoutForm>
             </Elements>

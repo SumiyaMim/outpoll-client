@@ -49,7 +49,7 @@ const AddSurvey = () => {
         axiosPublic.post('/surveys', newSurvey)
         .then(res => {
           console.log(res.data);
-          navigate('/dashboard/manage-surveys');
+          navigate('/dashboard/my-surveys');
         })
 
     }
@@ -97,13 +97,13 @@ const AddSurvey = () => {
                             className='input flex-grow focus:outline-none rounded-md placeholder:text-zinc-500 placeholder:text-sm text-sm p-3'
                             >
                             <option disabled selected value="Select Category">Select Category</option>
+                            <option value="Customer Satisfaction">Customer Satisfaction</option>
                             <option value="Education">Education</option>
                             <option value="Entertainment">Entertainment</option>
                             <option value="Environment">Environment</option>
-                            <option value="Feedback">Feedback</option>
                             <option value="Food">Food</option>
                             <option value="Lifestyle">Lifestyle</option>
-                            <option value="Product">Product</option>
+                            <option value="Technology">Technology</option>
                             <option value="Travel">Travel</option>
                         </select>
                         </div>

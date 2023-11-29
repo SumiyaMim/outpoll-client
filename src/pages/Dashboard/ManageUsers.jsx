@@ -2,14 +2,23 @@ import { useQuery } from "@tanstack/react-query"
 import { Helmet } from "react-helmet-async"
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useState } from "react";
+
+const roles = [
+  "pro user",
+  "user",
+  "surveyor",
+  "admin",
+]
 
 const ManageUsers = () => {
 
     const axiosSecure = useAxiosSecure();
+    const [role, setRole] = useState('');
 
     const { data: users=[], refetch } = useQuery({
-        queryKey: ['users'],
-        queryFn: async () => await axiosSecure.get('/users')
+        queryKey: ['users', role],
+        queryFn: async () => await axiosSecure.get(`/users?role=${role}`)
     })
     // console.log(users)
 
@@ -36,9 +45,23 @@ const ManageUsers = () => {
       <Helmet>
            <title>Dashboard | Manage Users</title>
         </Helmet>    
-        <div className="mb-10">
+        <div className="mb-20">
             <h3 className="text-2xl font-semibold w-fit mx-auto text-center mb-1.5">Manage Users</h3>
             <hr className="border-[1.5px] w-12 border-purple-700 mx-auto mb-5"/>
+        </div>
+        <div className="my-5">
+           <h4 className="text-base font-medium text-gray-900 mb-2">Filter By Role</h4>
+            <select 
+                onChange={(e) => setRole(e.target.value)}
+                className="bg-zinc-50 border border-zinc-300 focus:outline-none text-zinc-900 text-sm rounded-md block w-72 md:w-64 lg:w-72 p-2"
+                >
+                    <option disabled selected value="">Choose one</option>
+                    {roles.map((role) => (
+                        <option key={role} value={role}>
+                            {role}
+                        </option>
+                    ))}
+            </select>
         </div>
         <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
             <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>

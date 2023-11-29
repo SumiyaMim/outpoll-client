@@ -10,17 +10,17 @@ import Spinner from '../components/shared/Spinner'
 const Surveys = () => {
 
     const axiosPublic = useAxiosPublic();
-    const [votes, setVotes] = useState('')
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('');
     const [surveys, setSurveys] = useState([]);
     const [titles, setTitles] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [sortOrder, setSortOrder] = useState('');
 
     const { data: allSurveys = [], isLoading } = useQuery({
-        queryKey: ['surveys', votes, title, category],
+        queryKey: ['surveys', title, category],
         queryFn: async () => {
-            const res = await axiosPublic.get(`/surveys?sortField=votes&sortOrder=${votes}&title=${title}&category=${category}`);
+            const res = await axiosPublic.get(`/surveys?title=${title}&category=${category}`);
             return res.data;
         },
         onSuccess: (data) => {
@@ -50,8 +50,14 @@ const Surveys = () => {
             filteredSurveys = filteredSurveys.filter(survey => survey.title === title);
         }
 
+        if (sortOrder === 'asc') {
+            filteredSurveys.sort((a, b) => a.votes - b.votes);
+        } else if (sortOrder === 'desc') {
+            filteredSurveys.sort((a, b) => b.votes - a.votes);
+        }
+
         setSurveys(filteredSurveys);
-    }, [title, category, allSurveys]);
+    }, [title, category, allSurveys, sortOrder]);
     
   return (
     <div className="pt-36">
@@ -95,8 +101,8 @@ const Surveys = () => {
             <div>
                 <label className="mb-1 text-sm font-medium text-gray-900 ">Vote</label>
                 <select 
-                onChange={(e) => setVotes(e.target.value)}
-                className="bg-zinc-50 border border-zinc-300 focus:outline-none text-zinc-900 text-sm rounded-md block w-72 md:w-36 lg:w-72 p-2"
+        onChange={(e) => setSortOrder(e.target.value)}
+        className="bg-zinc-50 border border-zinc-300 focus:outline-none text-zinc-900 text-sm rounded-md block w-72 md:w-36 lg:w-72 p-2"
                 >
                     <option disabled selected>Choose one</option>
                     <option value='asc'>From low to high</option>

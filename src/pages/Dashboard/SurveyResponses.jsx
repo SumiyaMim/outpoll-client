@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async"
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Cell, XAxis, YAxis, CartesianGrid, PieChart, Pie, Legend } from 'recharts';
+import { Cell, PieChart, Pie, Legend } from 'recharts';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red'];
 
@@ -122,7 +122,7 @@ const SurveyResponses = () => {
             </div>
         </div>
 
-        <div>
+        <div className="flex items-center justify-center">
         {pieChartData.length > 0 ? ( 
           <PieChart width={370} height={300}>
             <Pie
