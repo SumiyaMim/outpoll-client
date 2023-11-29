@@ -5,7 +5,7 @@ import useAxiosPublic from './useAxiosPublic';
 const useRole = (email) => {
   const axiosPublic = useAxiosPublic();
 
-  const { data: role, isLoading } = useQuery({
+  const { data: role, isLoading, refetch } = useQuery({
     queryKey: ['role', email],
     queryFn: async () => {
       const res = await axiosPublic.get(`/user/${email}`);
@@ -13,7 +13,7 @@ const useRole = (email) => {
     },
   });
 
-  return { role, isLoading };
+  return { role, isLoading, refetch };
 };
 
 export default useRole;

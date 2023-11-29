@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Cell, PieChart, Pie, Legend } from 'recharts';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red'];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'purple', 'pink', 'cyan', 'brown'];
 
 const SurveyResponses = () => {
 
@@ -122,11 +122,13 @@ const SurveyResponses = () => {
             </div>
         </div>
 
+        <h4 className="mt-20 mb-2 text-center font-semibold text-xl">User Performance</h4>
+        <hr className="border-[1.5px] w-14 border-purple-700 mx-auto mb-5"/>
         <div className="flex items-center justify-center">
         {pieChartData.length > 0 ? ( 
           <PieChart width={370} height={300}>
             <Pie
-              dataKey="yes" 
+              dataKey="totalCount" 
               nameKey="participant_name" 
               data={pieChartData}
               cx="50%"

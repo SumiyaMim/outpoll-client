@@ -6,9 +6,12 @@ import { IoFlag } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
-import useAxiosSecure from "../../hooks/useAxiosSecure"
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { Cell, PieChart, Pie, Legend } from 'recharts';
+import { useQuery } from "@tanstack/react-query";
+
+const COLORS = ['#0088FE', '#00C49F'];
 
 const SurveyDetails = () => {
 
@@ -23,7 +26,6 @@ const SurveyDetails = () => {
     const [reportStatus, setReportStatus] = useState(report === 1);
     const { user } = useAuth();
     const { role } = useRole(user?.email);
-    const axiosSecure = useAxiosSecure();
     const axiosPublic = useAxiosPublic();
     const [comments, setComments] = useState([]);
     const [userRole, setUserRole] = useState(null); 
@@ -95,8 +97,8 @@ const SurveyDetails = () => {
 
         // send participate survey to the server
         if ((role === 'user' || role === 'pro user')) {
-            axiosSecure.post('/participants', participateSurvey)
-            .then(res => {    
+            axiosPublic.post('/participants', participateSurvey)
+            .then(res => {   
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -145,7 +147,7 @@ const SurveyDetails = () => {
 
         // send participate survey to the server
         if (role === 'pro user') {
-            axiosSecure.post('/comments', commentSurvey)
+            axiosPublic.post('/comments', commentSurvey)
             .then(res => {    
                 Swal.fire({
                   position: "center",
@@ -170,7 +172,25 @@ const SurveyDetails = () => {
             });
     }, [_id]);
 
-    
+    const { data: vote = [] } = useQuery({
+        queryKey: ['vote'],
+        queryFn: async () => {
+            const res = await axiosPublic.get('/vote');
+            return res.data;
+        }
+      });
+    //   console.log(vote?.voteCounts)
+
+      const filteredVotes = vote?.voteCounts?.find(voteItem => voteItem.title === survey.title);
+    //   console.log("Filtered Votes:", filteredVotes); 
+   
+    const pieChartData = filteredVotes
+    ? [
+        { title: 'Yes', value: filteredVotes.yes || 0 },
+        { title: 'No', value: filteredVotes.no || 0 },
+        ]
+    : [];
+
   return (
     <div className="pt-36 pb-20">
         <Helmet>
@@ -239,7 +259,7 @@ const SurveyDetails = () => {
                                         disabled={userRole !== 'user' && userRole !== 'pro user'}
                                         className={`${likeStatus ? 'text-purple-800' : 'text-zinc-800'}`}
                                     >
-                                        <AiFillLike />
+                                        <AiFillLike /> 
                                     </button>
                                     <button
                                         onClick={handleDislikeClick}
@@ -298,6 +318,32 @@ const SurveyDetails = () => {
                         )}
                     </div>     
                 </div>
+            </div>
+
+            <h4 className="mt-20 mb-2 text-center font-semibold text-xl">Survey Results</h4>
+            <hr className="border-[1.5px] w-14 border-purple-700 mx-auto mb-5"/>
+            <div className="flex items-center justify-center">
+                {pieChartData.length > 0 ? (
+                    <PieChart width={370} height={300}>
+                    <Pie
+                        dataKey="value"
+                        nameKey="title"
+                        data={pieChartData}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        outerRadius={80}
+                        fill="#8884d8"
+                    >
+                        {pieChartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                    </Pie>
+                    <Legend />
+                    </PieChart>
+                ) : (
+                    <p className="text-sm text-zinc-600">No data available for visual result</p>
+                )}
             </div>
         </Container>
     </div>
