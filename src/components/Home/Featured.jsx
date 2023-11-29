@@ -14,7 +14,7 @@ const Featured = () => {
         axiosPublic.get('/surveys')
         .then((res) => {
             const sortedSurveys = res.data.sort((a, b) => b.votes - a.votes);
-            const topSurveys = sortedSurveys.slice(0, 3);
+            const topSurveys = sortedSurveys.slice(0, 6);
             setTopSurveys(topSurveys);
         });
     }, []);

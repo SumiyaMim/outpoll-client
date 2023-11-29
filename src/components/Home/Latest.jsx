@@ -14,7 +14,7 @@ const Latest = () => {
         axiosPublic.get('/surveys')
         .then((res) => {
             const sortedSurveys = res.data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            const latestSurveys = sortedSurveys.slice(0, 3);
+            const latestSurveys = sortedSurveys.slice(0, 6);
             setLatestSurveys(latestSurveys);
         });
     }, []);
