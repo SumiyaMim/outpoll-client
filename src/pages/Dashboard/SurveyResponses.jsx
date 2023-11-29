@@ -3,6 +3,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Cell, PieChart, Pie, Legend } from 'recharts';
+import moment from 'moment';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'purple', 'pink', 'cyan', 'brown'];
 
@@ -101,13 +102,7 @@ const SurveyResponses = () => {
                         </td>
                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                             <p className='text-gray-900 whitespace-no-wrap'>
-                            {new Date(participant?.timestamp)
-                                .toLocaleDateString('en-GB', {
-                                    day: '2-digit',
-                                    month: '2-digit',
-                                    year: 'numeric',
-                                })
-                                .replace(/\//g, '/')}
+                              {moment(participant?.timestamp).format('DD/MM/YYYY')}
                             </p>
                         </td>
                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
@@ -126,7 +121,7 @@ const SurveyResponses = () => {
         <hr className="border-[1.5px] w-14 border-purple-700 mx-auto mb-5"/>
         <div className="flex items-center justify-center">
         {pieChartData.length > 0 ? ( 
-          <PieChart width={370} height={300}>
+          <PieChart width={370} height={400}>
             <Pie
               dataKey="totalCount" 
               nameKey="participant_name" 

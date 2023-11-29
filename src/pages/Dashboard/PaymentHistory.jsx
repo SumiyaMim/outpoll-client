@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async"
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import moment from 'moment';
 
 const PaymentHistory = () => {
 
@@ -57,13 +58,7 @@ const PaymentHistory = () => {
                         </td>
                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                             <p className='text-gray-900 whitespace-no-wrap'>
-                                {new Date(payment?.date)
-                                .toLocaleDateString('en-GB', {
-                                    day: '2-digit',
-                                    month: '2-digit',
-                                    year: 'numeric',
-                                })
-                                .replace(/\//g, '/')}
+                                {moment(payment?.timestamp).format('DD/MM/YYYY')}
                             </p>
                         </td>
                        
