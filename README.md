@@ -10,7 +10,7 @@ a robust user management system, and creating an admin dashboard with role manag
 - Payment System: Offers a premium membership for users to be pro-user members
 - Participant Engagement: After login, only the user and pro-user roles can participate in a survey. A user is not able to participate in a survey twice. Users can like, dislike, and report in a survey.
 - Comment: Only pro users can comment in a survey.
-- SweetAlert Notifications: Users receive SweetAlert for successful participation, comments, likes, dislikes, and reports in surveys, enhancing user feedback and experience.
+- SweetAlert Notifications: Users receive SweetAlert for successful participation, comments, likes, dislikes, and reports in surveys to enhance user feedback and experience.
 - Dashboard: Surveyor can create and update surveys, view pro-user comments, and access survey responses. On the other hand, the admin can manage user roles, unpublish surveys, view pro-user payment history, and access survey responses.
 
 
