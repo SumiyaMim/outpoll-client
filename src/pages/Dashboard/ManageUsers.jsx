@@ -114,7 +114,7 @@ const ManageUsers = () => {
                             <p className='text-gray-900 whitespace-no-wrap'>{user?.role}</p>
                         </td>
                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-xs font-medium flex items-center gap-3'>
-                            <p className='text-gray-900 whitespace-no-wrap'>Update Role:</p>
+                            <p className='text-gray-900 whitespace-no-wrap text-sm font-normal'>Update Role:</p>
                             <button 
                             onClick={() => handleSurveyorRole(user)}
                             disabled={user?.role === 'pro user' || user?.role === 'surveyor' || user?.role === 'admin'} 
