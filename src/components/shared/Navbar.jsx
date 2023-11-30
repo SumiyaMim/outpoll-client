@@ -144,7 +144,9 @@ const Navbar = () => {
                     <div className='absolute rounded-xl shadow-md p-6 w-[200px] bg-white overflow-hidden right-0 top-16 text-sm lg:hidden'>
                         <div className='block lg:hidden'>
                             <div className='flex flex-col gap-2.5'>
-                                {user?.email && <p className='font-medium text-sm'>{user.displayName}</p>}
+                            {user?.email && (
+                                <>
+                                <p className='font-medium text-sm'>{user.displayName}</p>
                                 <NavLink
                                     to='/my-profile'
                                     className={({ isActive }) =>
@@ -164,6 +166,8 @@ const Navbar = () => {
                                         Dashboard
                                 </NavLink>
                                 ) : null}
+                                </>
+                            )}
 
                                 <NavLink
                                     to='/'

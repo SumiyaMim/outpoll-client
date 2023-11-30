@@ -51,7 +51,7 @@ const router = createBrowserRouter([
             {
                 path: '/survey-details/:id', 
                 element: <SurveyDetails></SurveyDetails>,
-                loader: ({params}) => fetch(`http://localhost:5000/surveys/${params.id}`)
+                loader: ({params}) => fetch(`https://outpoll-server.vercel.app/surveys/${params.id}`)
             },
             {
                 path: '/about',
@@ -118,7 +118,7 @@ const router = createBrowserRouter([
             {
                 path: 'update-survey/:id',
                 element: <PrivateRoute><SurveyorRoute><UpdateSurvey></UpdateSurvey></SurveyorRoute></PrivateRoute>,
-                loader: ({params}) => fetch(`http://localhost:5000/surveys/${params.id}`)
+                loader: ({params}) => fetch(`https://outpoll-server.vercel.app/surveys/${params.id}`)
             },   
         ]
     }
