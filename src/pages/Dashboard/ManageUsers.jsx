@@ -23,8 +23,8 @@ const ManageUsers = () => {
     // console.log(users)
 
     // update role
-    const handleMakeRole = user => {
-      axiosSecure.patch(`/users/admin/${user._id}`)
+    const handleSurveyorRole = user => {
+      axiosSecure.patch(`/users/surveyor/${user._id}`)
       .then(res =>{
           console.log(res.data)
           if(res.data.modifiedCount > 0){
@@ -33,6 +33,24 @@ const ManageUsers = () => {
                   position: "center",
                   icon: "success",
                   title: `${user.name} is an Surveyor Now!`,
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+          }
+      })
+    }
+
+    // update to admin role
+    const handleAdminRole = user => {
+      axiosSecure.patch(`/users/admin/${user._id}`)
+      .then(res =>{
+          console.log(res.data)
+          if(res.data.modifiedCount > 0){
+              refetch();
+              Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: `${user.name} is an Admin Now!`,
                   showConfirmButton: false,
                   timer: 1500
                 });
@@ -95,10 +113,16 @@ const ManageUsers = () => {
                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                             <p className='text-gray-900 whitespace-no-wrap'>{user?.role}</p>
                         </td>
-                        <td className='px-5 py-5 border-b border-gray-200 bg-white text-xs font-medium'>
+                        <td className='px-5 py-5 border-b border-gray-200 bg-white text-xs font-medium flex items-center gap-3'>
+                            <p className='text-gray-900 whitespace-no-wrap'>Update Role:</p>
                             <button 
-                            onClick={() => handleMakeRole(user)}
-                            className="bg-purple-800 text-white rounded-md p-2">Update</button>                            
+                            onClick={() => handleSurveyorRole(user)}
+                            disabled={user?.role === 'pro user' || user?.role === 'surveyor' || user?.role === 'admin'} 
+                            className="bg-purple-800 text-white rounded-md p-2">To Surveyor</button>                            
+                            <button 
+                            onClick={() => handleAdminRole(user)}
+                            disabled={user?.role === 'pro user' || user?.role === 'surveyor' || user?.role === 'admin'} 
+                            className="bg-purple-800 text-white rounded-md p-2">To Admin</button>                            
                         </td>
                     </tr>
                   )
