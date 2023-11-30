@@ -118,11 +118,11 @@ const ManageUsers = () => {
                             <button 
                             onClick={() => handleSurveyorRole(user)}
                             disabled={user?.role === 'pro user' || user?.role === 'surveyor' || user?.role === 'admin'} 
-                            className="bg-purple-800 text-white rounded-md p-2">To Surveyor</button>                            
+                            className="bg-purple-800 text-white rounded-md py-2 px-3">To Surveyor</button>                            
                             <button 
                             onClick={() => handleAdminRole(user)}
                             disabled={user?.role === 'pro user' || user?.role === 'surveyor' || user?.role === 'admin'} 
-                            className="bg-purple-800 text-white rounded-md p-2">To Admin</button>                            
+                            className="bg-purple-800 text-white rounded-md py-2 px-3">To Admin</button>                            
                         </td>
                     </tr>
                   )
