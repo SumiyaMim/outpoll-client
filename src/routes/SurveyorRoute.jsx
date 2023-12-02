@@ -12,7 +12,7 @@ const SurveyorRoute = ({ children }) => {
   
     if (role === 'surveyor') return children
   
-    return <Navigate to='/dashboard' />
+    return <Navigate to='/' />
 }
 
 export default SurveyorRoute

@@ -89,35 +89,35 @@ const router = createBrowserRouter([
         children: [
             {
                 path: 'add-survey',
-                element: <PrivateRoute><SurveyorRoute><AddSurvey></AddSurvey></SurveyorRoute></PrivateRoute>
+                element: <SurveyorRoute><AddSurvey></AddSurvey></SurveyorRoute>
             },   
             {
                 path: 'my-surveys',
-                element: <PrivateRoute><SurveyorRoute><MySurveys></MySurveys></SurveyorRoute></PrivateRoute>
+                element: <SurveyorRoute><MySurveys></MySurveys></SurveyorRoute>
             },   
             {
                 path: 'feedback',
-                element: <PrivateRoute><SurveyorRoute><Feedback></Feedback></SurveyorRoute></PrivateRoute>
+                element: <SurveyorRoute><Feedback></Feedback></SurveyorRoute>
             },   
             {
                 path: 'manage-surveys',
-                element: <PrivateRoute><AdminRoute><ManageSurveys></ManageSurveys></AdminRoute></PrivateRoute>
+                element: <AdminRoute><ManageSurveys></ManageSurveys></AdminRoute>
             },   
             {
                 path: 'manage-users',
-                element: <PrivateRoute><AdminRoute><ManageUsers></ManageUsers></AdminRoute></PrivateRoute>
+                element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
             },   
             {
                 path: 'payment-History',
-                element: <PrivateRoute><AdminRoute><PaymentHistory></PaymentHistory></AdminRoute></PrivateRoute>
+                element: <AdminRoute><PaymentHistory></PaymentHistory></AdminRoute>
             },   
             {
                 path: 'survey-responses',
-                element: <PrivateRoute><SurveyResponses></SurveyResponses></PrivateRoute>
+                element: <SurveyResponses></SurveyResponses>
             },   
             {
                 path: 'update-survey/:id',
-                element: <PrivateRoute><SurveyorRoute><UpdateSurvey></UpdateSurvey></SurveyorRoute></PrivateRoute>,
+                element: <SurveyorRoute><UpdateSurvey></UpdateSurvey></SurveyorRoute>,
                 loader: ({params}) => fetch(`https://outpoll-server.vercel.app/surveys/${params.id}`)
             },   
         ]
