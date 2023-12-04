@@ -25,3 +25,7 @@ a robust user management system, and creating an admin dashboard with role manag
 - Mongoose
 - Stripe (payment gateway)
 - packages - react router dom, sweetalert2, react icons, moment, lottie-react, tanstack, axios, react-helmet-async, recharts, swiper, cors, dotenv, jsonwebtoken, cookie-parser
+
+# Admin Credentials
+- Email: admin1234@gmail.com
+- Password: admin1234
