@@ -1,5 +1,3 @@
-- Live Link: https://outpoll-59146.web.app/
-
 # Project Description
 
 OutPoll is a comprehensive Polling and Survey Application designed for survey creation, voting, result analysis, and user interaction. This project involves integrating payment functionalities, implementing
@@ -13,8 +11,17 @@ a robust user management system, and creating an admin dashboard with role manag
 - SweetAlert Notifications: Users receive SweetAlert for successful participation, comments, likes, dislikes, and reports in surveys to enhance user feedback and experience.
 - Dashboard: Surveyor can create and update surveys, view pro-user comments, and access survey responses. On the other hand, the admin can manage user roles, unpublish surveys, view pro-user payment history, and access survey responses.
 
-# The challenges I have faced for the backend -
-- Ensuring proper authorization based on user roles.
-- Pipeline aggregation.
-- Error handling.
-- To implement mongoose.
+# Technology
+
+- HTML
+- Tailwind CSS
+- Headless UI
+- Javascript
+- React.js
+- Firebase
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- Stripe (payment gateway)
+- packages - react router dom, sweetalert2, react icons, moment, lottie-react, tanstack, axios, react-helmet-async, recharts, swiper, cors, dotenv, jsonwebtoken, cookie-parser
